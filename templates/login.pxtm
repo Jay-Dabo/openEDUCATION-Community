@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" style="background-color: white;">
+
+<head><title><?php print $settings['html_title'];?></title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="shortcut icon" href="images/tab-logo.png" type="image/x-icon">
+<link rel="stylesheet" href="blabax.css?xyz=<?php print $settings['forcereload'];?>" />
+<style>
+<?php print $settings['style_delivery'];?>
+</style>
+<script src="blabax.js?xyz=<?php print $settings['forcereload'];?>"></script>
+</head>
+
+<body style="background-color: white; margin:0px;">
+
+<div class="limiter" style="width: 100%; height:100%; margin: 0 auto; font-size: 16px; font-family: 'Raleway', sans-serif;">
+<div class="container-login100" style="width: 100%; height: 50%; min-height: 100vh; display: -webkit-box; display: -webkit-flex; display: -moz-box; display: -ms-flexbox; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; background-color: #ffffff;">
+<div class="wrap-login100 p-l-30 p-r-30 p-t-30 p-b-0" style="width: 400px; position: relative; top: -50px;">
+
+<div class="login100-form-header center" style="display: inline-block; text-align: center; align-items: center; width: 100%; position: relative;">
+<p style="text-align:center;"><a href="http://openeducation-gh.stackstaging.com/platform/index.php"><img src="images/login-header.png" alt="openEDUCATION"></a></p>
+</div>
+
+<form action="index.php" method="post" autocomplete="off" onsubmit="if(form_submitted<1 && this.username.value.trim().length>2){this.action='account.php';form_submitted=1;return true}else{return false}">
+
+<div class="holder holder_menu" style="margin:0px auto;">
+<div class="x1" style="float:none;margin:0px auto;font-family: 'Raleway', sans-serif; font-size:18px; font-weight:300; text-align:center;"><?php print $lang['login'];?></div>
+<br style="clear:both" /></div>
+
+<div class="holder" style="margin:0px auto; text-align:center;">
+<input type="text" style="width: 80%;  padding: 10px; margin: 10px auto; outline: none; border:none; color: #000; font-weight: 500; font-family: 'Raleway', sans-serif; text-align: center;" name="username" maxlength="12" class="holder_text x_accent_bb svg_user" placeholder="<?php print $lang['guest'];?>" value="<?php if(isset($_GET['passrequired_uname'])){print $_GET['passrequired_uname'];}?>" />
+</div>
+
+<div class="holder" id="loginpass" style="margin:0px auto; text-align:center;">
+<input type="password" style="width: 80%; padding: 10px; margin: 10px auto; outline: none; border:none; color: #000; font-weight: 500; font-family: 'Raleway', sans-serif; text-align: center;" name="password" maxlength="32" class="holder_text x_accent_bb svg_pass" placeholder="<?php print $lang['password'];?>" />
+</div>
+
+<div class="holder" style="margin:0px auto; padding: 20px 0; text-align: center">
+<div><input type="submit" class="x_bcolor_z holder_button x_left_rounded" style="padding: 10px 0; border:none; width: 50%; height:40px; font-family: 'Raleway', sans-serif; font-size: 10px; font-weight: 500; text-align: center; margin:0px auto; border-style: solid; border-width: thin; border-radius: 50px; outline: none; color: #fff; background-color: #000; cursor: pointer;" value="<?php print $lang['login_submit'];?>"/></div>
+</div>
+
+<div class="holder" style="font-family: 'Raleway', sans-serif;text-align:center; font-size:12px; font-weight:300; font-variant:normal">
+<div style="float:none;margin:0px auto;font-family: 'Raleway', sans-serif;">
+<div style="width:100%; margin:0px auto; text-align:center">
+<p style="float:none;margin:5px auto; font-family: 'Raleway', sans-serif; font-size: 10px; font-weight:300; line-height: 1.7; text-align:center;"><a style=":focus outline:none; :hover text-decoration:none; :hover color:#ababab; font-size: 10px; line-height: 1.7; color: #ab4141; margin: 0px; transition: all 0.4s; -webkit-transition: all 0.4s; -o-transition: all 0.4s; -moz-transition: all 0.4s;" href='account.php?q=password'>Forgot your Password?</a><p>
+<p style="float:none;margin:-15px auto; font-family: 'Raleway', sans-serif; font-size: 10px; font-weight:300; line-height: 1.7; text-align:center;">Don't have an account? <a style=":focus outline:none; :hover text-decoration:none; :hover color:#ababab; font-size: 10px; line-height: 1.7; color: #ab4141; margin: 0px; transition: all 0.4s; -webkit-transition: all 0.4s; -o-transition: all 0.4s; -moz-transition: all 0.4s;" href="account.php?q=register">Register</a></p>
+</div>
+</div>
+</div>
+</form>
+
+<script>
+
+function switch_guest(g,u){
+if(allow_guest>0){
+a=document.forms[0].username
+b=de('loginpass')
+c=de('sguestbutton')
+if(guest_state<1){ guest_state=1; a.placeholder=g; hoop('loginpass',0); c.style.opacity='1.0'; document.forms[0].password.value='' }
+else{ guest_state=0;  a.placeholder=u; hoop('loginpass',1); c.style.opacity='0.5' }
+}}
+
+form_submitted=0; guest_state=1; show_passwordbox=false;
+allow_guest=parseInt(<?php print $settings['allow_guest'];?>);
+<?php if(isset($_GET['passrequired_uname'])){ print 'show_passwordbox=1;'; } ?>
+
+if(allow_guest<1){allow_guest=1;switch_guest('<?php print $lang['guest'];?>','<?php print $lang['username'];?>');allow_guest=0}
+else if(show_passwordbox){switch_guest('<?php print $lang['guest'];?>','<?php print $lang['username'];?>');}
+
+window.onload=verti_pos; window.onresize=verti_pos
+setTimeout("de('middps').style.display='none';de('middps').style.visibility='visible';hoop('middps',1)",100)
+setTimeout("hoop('homelink',1)",2000)
+
+</script>
+
+<?php if(!isset($_COOKIE[$xcookie_message[0]]) && strlen($settings['announce'])>5){
+print $settings['announce']; } ?>
+
+</div>
+</div>
+</div>
+
+</body>
+</html>
