@@ -1,0 +1,13 @@
+<?php
+
+$options=' ENGINE=MYISAM CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci';
+if($dbss['cset']=='utf8'){$options=' ENGINE=MYISAM CHARACTER SET utf8 COLLATE utf8_general_ci';}
+
+
+// version update
+$forcereload=substr(md5($timestamp),0,9);
+neutral_query('UPDATE '.$dbss['prfx']."_settings SET value='$forcereload' WHERE id='forcereload'");
+neutral_query('UPDATE '.$dbss['prfx']."_settings SET value='$version' WHERE id='version'");
+redirect('admin.php?ok='.$timestamp);
+
+?>
